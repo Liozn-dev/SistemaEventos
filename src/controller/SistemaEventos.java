@@ -14,7 +14,6 @@ public class SistemaEventos {
     private static List<Evento> eventos = new ArrayList<>();
     private static final String ARQUIVO = "data/events.data";
     private static Usuario usuarioAtual = null;
-    // Vamos assumir duração padrão de 2 horas para determinar se um evento está ocorrendo
     private static final int DURACAO_HORAS = 2;
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
@@ -44,7 +43,6 @@ public class SistemaEventos {
         } while (opcao != 0);
     }
 
-    // Método para criar a pasta "data" se não existir
     private static void criarPastaData() {
         File pasta = new File("data");
         if (!pasta.exists()) {
@@ -62,7 +60,6 @@ public class SistemaEventos {
         System.out.print("Idade: "); int idade = Integer.parseInt(sc.nextLine());
         usuarioAtual = new Usuario(nome, email, cidade, telefone, idade);
         System.out.println("Usuário cadastrado: " + usuarioAtual + "\n");
-        // Notificar eventos na cidade do usuário que ocorrerão em breve (próximos 7 dias)
         notificarEventosCidade();
     }
 
@@ -212,8 +209,6 @@ public class SistemaEventos {
 
     private static void salvarEventos() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARQUIVO))) {
-            // cada evento em uma linha com campos separados por ||
-            // participantes separados por ;; e cada participante tem campos nome::email::cidade::telefone::idade
             for (Evento ev : eventos) {
                 StringBuilder sb = new StringBuilder();
                 sb.append(escape(ev.getNome())).append("||")
